@@ -1,11 +1,13 @@
 package com.smarthome.artech.security;
 
 import com.smarthome.artech.exceptions.SpringRedditException;
+import com.smarthome.artech.model.CustomUserDetails;
+import com.smarthome.artech.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -23,6 +25,7 @@ import static java.util.Date.from;
 public class JwtProvider {
 
     private KeyStore keyStore;
+    private final String JWT_SECRET = "lodaaaaaa";
     @Value("${jwt.expiration.time}")
     private Long jwtExpirationInMillis;
 
@@ -38,16 +41,18 @@ public class JwtProvider {
 
     }
 
-    public String generateToken(Authentication authentication) {
-        User principal = (User) authentication.getPrincipal();
+    public String generateToken(CustomUserDetails userDetails) {
+        // Lấy thông tin user
+        java.util.Date now = new java.util.Date();
+        java.util.Date expiryDate = new java.util.Date(now.getTime() + jwtExpirationInMillis);
+        // Tạo chuỗi json web token từ id của user.
         return Jwts.builder()
-                .setSubject(principal.getUsername())
+                .setSubject(Long.toString(userDetails.getUser().getUserId()))
                 .setIssuedAt(from(Instant.now()))
                 .signWith(getPrivateKey())
                 .setExpiration(Date.from(Instant.now().plusMillis(jwtExpirationInMillis)))
                 .compact();
     }
-
     public String generateTokenWithUserName(String username) {
         return Jwts.builder()
                 .setSubject(username)

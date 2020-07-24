@@ -3,6 +3,7 @@ package com.smarthome.artech.controller;
 import com.smarthome.artech.request.LoginRequest;
 import com.smarthome.artech.request.RefreshTokenRequest;
 import com.smarthome.artech.response.AuthenticationResponse;
+import com.smarthome.artech.response.LoginResponse;
 import com.smarthome.artech.service.AuthService;
 import com.smarthome.artech.service.RefreshTokenService;
 import lombok.AllArgsConstructor;
@@ -22,11 +23,6 @@ public class AuthController {
     private final AuthService authService;
     private final RefreshTokenService refreshTokenService;
 
-    @GetMapping("accountVerification/{token}")
-    public ResponseEntity<String> verifyAccount(@PathVariable String token) {
-        authService.verifyAccount(token);
-        return new ResponseEntity<>("Account Activated Successfully", OK);
-    }
 
     @PostMapping("/login")
     public AuthenticationResponse login(@RequestBody LoginRequest loginRequest) {
