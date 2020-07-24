@@ -68,7 +68,6 @@ public class AuthService {
                     .username(loginRequest.getUsername())
                     .build();
         }catch (DisabledException e){
-            LOGGER.error("error",e);
         }catch (BadCredentialsException e){
 
         }

@@ -93,6 +93,15 @@ public class JwtProvider {
         return claims.getSubject();
     }
 
+
+    public Long getUserIdFromJWT(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(JWT_SECRET)
+                .parseClaimsJws(token)
+                .getBody();
+
+        return Long.parseLong(claims.getSubject());
+    }
     public Long getJwtExpirationInMillis() {
         return jwtExpirationInMillis;
     }
