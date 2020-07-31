@@ -1,6 +1,5 @@
 package com.smarthome.artech.service;
 
-import com.smarthome.artech.exceptions.SpringRedditException;
 import com.smarthome.artech.model.CustomUserDetails;
 import com.smarthome.artech.model.User;
 import com.smarthome.artech.model.VerificationToken;
@@ -9,13 +8,12 @@ import com.smarthome.artech.repository.VerificationTokenRepository;
 import com.smarthome.artech.request.LoginRequest;
 import com.smarthome.artech.request.RefreshTokenRequest;
 import com.smarthome.artech.response.AuthenticationResponse;
-import com.smarthome.artech.response.LoginResponse;
+import com.smarthome.artech.response.UserResponse;
 import com.smarthome.artech.security.JwtProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.time.Instant;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -52,7 +49,12 @@ public class AuthService {
         return token;
     }
 
-
+    @Transactional(readOnly = true)
+    public String getCurrentUser() {
+        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.
+                getContext().getAuthentication().getPrincipal();
+        return "test";
+    }
 
 
     public AuthenticationResponse login(LoginRequest loginRequest) {

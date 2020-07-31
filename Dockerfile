@@ -1,15 +1,18 @@
-FROM maven as build
+#FROM maven as build
+#
+#WORKDIR /app
+#
+#COPY . .
+#
+#RUN  mvn clean package -DskipTests
+
+FROM openjdk:11.0.8-slim-buster
 
 WORKDIR /app
 
-COPY . .
+#COPY --from=build "/app/target/api-exec.jar" .
 
-RUN  mvn clean package -DskipTests
+COPY target/api.jar .
 
-FROM openjdk:11.0.8-slim
+CMD java -jar api.jar
 
-WORKDIR /app
-
-COPY target/artech-0.0.1-SNAPSHOT.jar .
-
-CMD java -jar artech-0.0.1-SNAPSHOT.jar

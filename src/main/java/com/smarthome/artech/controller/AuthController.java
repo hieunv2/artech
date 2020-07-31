@@ -1,9 +1,10 @@
 package com.smarthome.artech.controller;
 
+import com.smarthome.artech.model.User;
 import com.smarthome.artech.request.LoginRequest;
 import com.smarthome.artech.request.RefreshTokenRequest;
 import com.smarthome.artech.response.AuthenticationResponse;
-import com.smarthome.artech.response.LoginResponse;
+import com.smarthome.artech.response.UserResponse;
 import com.smarthome.artech.service.AuthService;
 import com.smarthome.artech.service.RefreshTokenService;
 import lombok.AllArgsConstructor;
@@ -38,5 +39,10 @@ public class AuthController {
     public ResponseEntity<String> logout(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
         refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
         return ResponseEntity.status(OK).body("Refresh Token Deleted Successfully!!");
+    }
+
+    @GetMapping("/info")
+    public String getUser(){
+        return "test";
     }
 }

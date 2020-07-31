@@ -9,24 +9,24 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
-public class ArtechApplication{
+public class ArtechApplication implements CommandLineRunner{
 
     public static void main(String[] args) {
         SpringApplication.run(ArtechApplication.class, args);
     }
-//    @Autowired
-//    UserRepository userRepository;
-//    @Autowired
-//    PasswordEncoder passwordEncoder;
-//
-//    @Override
-//    public void run(String... args) throws Exception {
-//        // Khi chương trình chạy
-//        // Insert vào csdl một user.
-//        User user = new User();
-//        user.setUsername("hieunv");
-//        user.setPassword(passwordEncoder.encode("123456"));
-//        userRepository.save(user);
-//        System.out.println(user);
-//    }
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Override
+    public void run(String... args) throws Exception {
+        // Khi chương trình chạy
+        // Insert vào csdl một user.
+        User user = new User();
+        user.setUsername("hieunv");
+        user.setPassword(passwordEncoder.encode("123456"));
+        userRepository.save(user);
+        System.out.println(user);
+    }
 }

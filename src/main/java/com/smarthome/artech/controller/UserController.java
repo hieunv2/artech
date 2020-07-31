@@ -1,6 +1,7 @@
 package com.smarthome.artech.controller;
 
 import com.smarthome.artech.model.User;
+import com.smarthome.artech.service.AuthService;
 import com.smarthome.artech.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
