@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sun.invoke.empty.Empty;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -52,7 +51,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Empty> delete(@PathVariable("id") Long id){
+    public ResponseEntity<String> delete(@PathVariable("id") Long id){
         Optional<User> curentUser = userService.findById(id);
         if (!curentUser.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
