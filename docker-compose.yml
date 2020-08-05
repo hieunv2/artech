@@ -1,0 +1,32 @@
+version: "3"
+services:
+  mysql-db:
+    container_name: mysql-db
+    image: "mysql:8.0.21"
+
+    ports:
+      - "3307:3306"
+    restart: always
+    networks:
+      - api
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=artech
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=123456
+
+  app:
+    container_name: app
+    build:
+      context: ./
+    volumes:
+      - .:/my_app
+    ports:
+      - "8088:8085"
+    depends_on:
+      - mysql-db
+    networks:
+      - api
+
+networks:
+  api:
