@@ -1,0 +1,27 @@
+version: "3"
+services:
+  mysql-db:
+    container_name: mysql-db
+    image: "mysql:8.0.21"
+
+    ports:
+      - "3307:3306"
+    restart: always
+    networks:
+      - api
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=artech
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=123456
+  app:
+    image: "vanhieu13546/artech"
+    networks:
+      - api
+    ports:
+      - "8085:8088"
+    depends_on:
+      - mysql-db
+
+networks:
+  api:
